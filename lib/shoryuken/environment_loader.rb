@@ -156,7 +156,9 @@ module Shoryuken
         end
       end
 
-      fail ArgumentError, "The specified queue(s) #{non_existent_queues} do not exist" if non_existent_queues.any?
+      non_existent_queues.each do |queue|
+        Shoryuken.queues.delete(queue)
+      end
     end
 
     def validate_workers
