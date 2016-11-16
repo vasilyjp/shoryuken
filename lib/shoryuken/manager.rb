@@ -125,6 +125,13 @@ module Shoryuken
       after(Shoryuken.options[:delay].to_f) { async.restart_queue!(queue) }
     end
 
+    def delete_queue!(queue)
+      return if !@queues.include?(queue)
+
+      logger.debug { "Deleting '#{queue}'" }
+
+      @queues.delete(queue)
+    end
 
     def dispatch
       return if stopped?

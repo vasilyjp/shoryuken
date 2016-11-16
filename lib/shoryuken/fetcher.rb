@@ -48,6 +48,8 @@ module Shoryuken
           end
 
           logger.debug { "Fetcher for '#{queue}' completed in #{elapsed(started_at)} ms" }
+        rescue Aws::SQS::Errors::NonExistentQueue
+          @manager.async.delete_queue!(queue)
         rescue => ex
           logger.error { "Error fetching message: #{ex}" }
           logger.error { ex.backtrace.first }
